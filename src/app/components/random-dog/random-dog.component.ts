@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {RandomDogService} from '../../services/random-dog.service';
 import {RandomDog} from '../../classes/random-dog';
 import {BehaviorSubject, Subscription} from 'rxjs';
+// import {HttpEventType} from '@angular/common/http';
 
 @Component({
 	selector: 'app-random-dog',
@@ -12,13 +13,22 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 
 export class RandomDogComponent implements OnDestroy, OnInit {
 
-	private randomDogSubscription: Subscription;
+	private randomDogJsonSubscription: Subscription;
+	private randomDogMediaSubscription: Subscription;
 
 	public randomDog: RandomDog = new RandomDog();
+	public randomDogMediaBlob;
+	public percentDone = 0;
 	public isVideo = false;
-	public isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	public isLoadingJson: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	public isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-	constructor(private randomDogService: RandomDogService) {
+	@ViewChild('videoPlayer') videoPlayer: ElementRef;
+
+	constructor(
+		private randomDogService: RandomDogService,
+		private renderer: Renderer2
+	) {
 
 	}
 
@@ -27,7 +37,8 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	}
 
 	ngOnDestroy() {
-		this.randomDogSubscription.unsubscribe();
+		this.randomDogJsonSubscription.unsubscribe();
+		this.randomDogMediaSubscription.unsubscribe();
 	}
 
 	onRandomDogBtnClicked = () => {
@@ -37,7 +48,8 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	getRandomDogFromService = () => {
 		const vm = this;
 
-		this.isLoading.next(true);
+		this.isLoadingJson.next(true);
+		this.isLoadingMedia.next(true);
 
 		// (event) => {
 		// 	// Don't change value after finished upload
@@ -50,22 +62,39 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		// 	// Log upload progress
 		// 	console.log(this.progress);
 
-		this.randomDogSubscription = this.randomDogService.getRandomDogImage()
+		this.randomDogJsonSubscription = this.randomDogService.getRandomDogMediaJson()
 			.subscribe(
 				{
 					next(data) {
 						vm.loadRandomDog(data);
+
+						// Does not work due to CORS
+						// Purpose: Show accurate loading progress
+						// vm.randomDogMediaSubscription = vm.randomDogService.getRandomDogMedia( vm.randomDog.getUrl() )
+						// 	.subscribe(
+						// 		result => {
+						// 			if (result.type === HttpEventType.DownloadProgress) {
+						// 				vm.percentDone = Math.round(100 * result.loaded / result.total);
+						// 				console.log(vm.percentDone);
+						// 			}
+						// 			if (result.type === HttpEventType.Response) {
+						// 				vm.isLoadingJson.next(false);
+						// 				vm.randomDogMediaBlob = result.body;
+						// 			}
+						// 		}
+						// 	);
 					},
 					error(error) {
 						console.error(error);
 					},
 					complete() {
-						vm.isLoading.next(false);
+						vm.isLoadingJson.next(false);
 					}
 				}
 			);
 	}
 
+	// Fills in RandomDog object
 	loadRandomDog = (randomDog: any) => {
 		this.randomDog.setFileSizeBytes(randomDog.fileSizeBytes);
 		this.randomDog.setUrl(randomDog.url);
@@ -73,6 +102,23 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		console.log(this.randomDog);
 
 		this.isVideo = this.randomDog.getUrl().indexOf('.mp4') > -1;
+
+		if (this.isVideo) {
+			// console.log(this.videoPlayer);
+			// const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+			// console.log(video);
+			this.isLoadingMedia.next(false);
+		}
+	}
+
+	// Fires when media is fully loaded
+	onMediaLoad(event) {
+		// if (this.isVideo) {
+		// 	const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+		// 	console.log(video);
+		// }
+		this.isLoadingMedia.next(false);
+		// console.log(event);
 	}
 
 }

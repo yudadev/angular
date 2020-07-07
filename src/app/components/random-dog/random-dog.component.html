@@ -1,18 +1,22 @@
 <div class="random-dog">
 	<div class="image-container">
-		<div *ngIf="isLoading | async">
+		<div [class]="{'hidden' : !(isLoadingMedia | async) }">
 			Loading next dog...
+			<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 		</div>
-		<div *ngIf="!(isLoading | async)">
+		<div [class]="{'hidden' : (isLoadingMedia | async) }">
 			<div>
-				<img *ngIf="!isVideo"
-					 [src]="randomDog.getUrl()">
-				<video *ngIf="isVideo"
+				<img [class]="{'hidden' : isVideo }"
+					 [src]="randomDog.getUrl()"
+					 (load)="onMediaLoad($event)">
+				<video #videoPlayer
 					   autoplay
 					   controls
 					   loop
 					   muted
-					   [src]="randomDog.getUrl()"></video>
+					   [class]="{'hidden' : !isVideo }"
+					   [src]="randomDog.getUrl()"
+					   (load)="onMediaLoad($event)"></video>
 			</div>
 		</div>
 	</div>
@@ -22,7 +26,7 @@
 			File size: {{randomDog.getFileSizeBytes() | number}} bytes
 		</div>
 
-		<button mat-button
+		<button mat-raised-button
 				color="primary"
 				(click)="onRandomDogBtnClicked()">
 			Random Dog

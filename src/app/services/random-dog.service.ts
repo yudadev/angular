@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/internal/operators';
 
@@ -8,17 +8,35 @@ import {catchError} from 'rxjs/internal/operators';
 })
 export class RandomDogService {
 
-	constructor(
-		private http: HttpClient
-	) {
+	constructor(private http: HttpClient) {
 	}
 
-	// Create
-	getRandomDogImage(): Observable<any> {
+	// Retrieve JSON from external service
+	getRandomDogMediaJson(): Observable<any> {
 		const API_URL = 'https://random.dog/woof.json';
-		return this.http.get<any>(API_URL)
+		return this.http.get<any>(
+			API_URL,
+			{
+				reportProgress: false,
+				responseType: 'json'
+			})
 			.pipe(
-				catchError(this.handleError<any>('getRandomDogImage', []))
+				catchError(this.handleError<any>('getRandomDogMediaJson', []))
+			);
+	}
+
+	// Retrieve media from external service
+	getRandomDogMedia(mediaURL: string): Observable<any> {
+		return this.http.get<any>(
+			mediaURL,
+			{
+				headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+				observe: 'events',
+				reportProgress: true,
+				responseType: 'blob'
+			})
+			.pipe(
+				catchError(this.handleError<any>('getRandomDogMedia', []))
 			);
 	}
 
@@ -32,7 +50,7 @@ export class RandomDogService {
 		return (error: any): Observable<T> => {
 
 			// TODO: send the error to remote logging infrastructure
-			console.error(error); // log to console instead
+			console.log(error); // log to console instead
 
 			// TODO: better job of transforming error for user consumption
 			console.log(`${operation} failed: ${error.message}`);
