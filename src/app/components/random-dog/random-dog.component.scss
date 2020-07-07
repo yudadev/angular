@@ -1,0 +1,30 @@
+::ng-deep {
+	.random-dog {
+
+		height: calc(100vh - 60px);
+		text-align: center;
+
+		.details,
+		.image-container {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.image-container {
+			height: 80%;
+
+			img,
+			video {
+				display: inline-block;
+				max-height: 80vh;
+				max-width: 100%;
+			}
+		}
+
+		.details {
+			height: 20%;
+		}
+	}
+}

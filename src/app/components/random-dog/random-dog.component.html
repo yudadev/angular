@@ -1,0 +1,31 @@
+<div class="random-dog">
+	<div class="image-container">
+		<div *ngIf="isLoading | async">
+			Loading next dog...
+		</div>
+		<div *ngIf="!(isLoading | async)">
+			<div>
+				<img *ngIf="!isVideo"
+					 [src]="randomDog.getUrl()">
+				<video *ngIf="isVideo"
+					   autoplay
+					   controls
+					   loop
+					   muted
+					   [src]="randomDog.getUrl()"></video>
+			</div>
+		</div>
+	</div>
+
+	<div class="details">
+		<div>
+			File size: {{randomDog.getFileSizeBytes() | number}} bytes
+		</div>
+
+		<button mat-button
+				color="primary"
+				(click)="onRandomDogBtnClicked()">
+			Random Dog
+		</button>
+	</div>
+</div>
