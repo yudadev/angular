@@ -1,8 +1,14 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {RandomDogComponent} from './components/random-dog/random-dog.component';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+	{
+		path: 'random-dog',
+		component: RandomDogComponent
+	}
+];
 
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],

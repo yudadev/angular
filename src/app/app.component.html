@@ -1,5 +1,26 @@
+<button mat-raised-button
+		[matMenuTriggerFor]="menu"
+		color="primary">
+	<mat-icon>menu</mat-icon>
+	Menu
+</button>
+<mat-menu #menu="matMenu">
+	<button mat-menu-item
+			routerLink="/"
+			routerLinkActive="active">
+		<mat-icon>home</mat-icon>
+		Home
+	</button>
+	<button mat-menu-item
+			routerLink="/random-dog"
+			routerLinkActive="active">
+		<mat-icon>pets</mat-icon>
+		Random Dog
+	</button>
+</mat-menu>
+
+<!--{{title}}-->
+
 <router-outlet></router-outlet>
 
-{{title}}
-
-<app-random-dog></app-random-dog>
+<!--<app-random-dog></app-random-dog>-->
