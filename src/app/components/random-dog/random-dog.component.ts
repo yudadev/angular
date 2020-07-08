@@ -14,11 +14,12 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 export class RandomDogComponent implements OnDestroy, OnInit {
 
 	private randomDogJsonSubscription: Subscription;
-	private randomDogMediaSubscription: Subscription;
+	// private randomDogMediaSubscription: Subscription;
 
 	public randomDog: RandomDog = new RandomDog();
 	public randomDogMediaBlob;
 	public percentDone = 0;
+	public isError = false;
 	public isVideo = false;
 	public isLoadingJson: BehaviorSubject<boolean> = new BehaviorSubject(false);
 	public isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -38,7 +39,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 	ngOnDestroy() {
 		this.randomDogJsonSubscription.unsubscribe();
-		this.randomDogMediaSubscription.unsubscribe();
+		// this.randomDogMediaSubscription.unsubscribe();
 	}
 
 	onRandomDogBtnClicked = () => {
@@ -96,6 +97,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 	// Fills in RandomDog object
 	loadRandomDog = (randomDog: any) => {
+		this.isError = false;
 		this.randomDog.setFileSizeBytes(randomDog.fileSizeBytes);
 		this.randomDog.setUrl(randomDog.url);
 
@@ -119,6 +121,15 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		// }
 		this.isLoadingMedia.next(false);
 		// console.log(event);
+	}
+
+	// Fires if media can't be loaded
+	onMediaError(event, mediaType: string) {
+		this.isError = true;
+
+		this.isLoadingMedia.next(false);
+		console.log('onMediaError, isVideo: ' + this.isVideo);
+		console.log(event);
 	}
 
 }

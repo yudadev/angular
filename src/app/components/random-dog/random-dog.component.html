@@ -1,13 +1,17 @@
 <div class="random-dog">
 	<div class="image-container">
-		<div [class]="{'hidden' : !(isLoadingMedia | async) }">
+		<div [class]="{'hidden' : !(isLoadingMedia | async) || isError }">
 			Loading next dog...
 			<mat-progress-bar mode="indeterminate"></mat-progress-bar>
 		</div>
-		<div [class]="{'hidden' : (isLoadingMedia | async) }">
+		<div [class]="{'hidden' : !isError }">
+			Dog-gone! Try another.
+		</div>
+		<div [class]="{'hidden' : (isLoadingMedia | async) || isError }">
 			<div>
 				<img [class]="{'hidden' : isVideo }"
 					 [src]="randomDog.getUrl()"
+					 (error)="!isVideo && onMediaError($event, 'media')"
 					 (load)="onMediaLoad($event)">
 				<video #videoPlayer
 					   autoplay
@@ -16,6 +20,7 @@
 					   muted
 					   [class]="{'hidden' : !isVideo }"
 					   [src]="randomDog.getUrl()"
+					   (error)="isVideo && onMediaError($event, 'video')"
 					   (load)="onMediaLoad($event)"></video>
 			</div>
 		</div>
