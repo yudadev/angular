@@ -33,7 +33,7 @@ export class RandomDogService {
 				headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 				observe: 'events',
 				reportProgress: true,
-				responseType: 'blob'
+				// responseType: 'blob'
 			})
 			.pipe(
 				catchError(this.handleError<any>('getRandomDogMedia', []))
