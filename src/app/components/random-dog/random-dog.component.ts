@@ -132,4 +132,12 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		console.log(event);
 	}
 
+	onSwipeLeft(event) {
+		this.getRandomDogFromService();
+	}
+
+	onSwipeRight(event) {
+		this.getRandomDogFromService();
+	}
+
 }

@@ -1,5 +1,7 @@
 <div class="random-dog">
-	<div class="image-container">
+	<div class="image-container"
+		 (swipeleft)="onSwipeLeft($event)"
+		 (swiperight)="onSwipeRight($event)">
 		<div [class]="{'hidden' : !(isLoadingMedia | async) || isError }">
 			Loading next dog...
 			<mat-progress-bar mode="indeterminate"></mat-progress-bar>

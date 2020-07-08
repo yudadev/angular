@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, HammerModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -20,11 +20,16 @@ import {HttpInterceptorService} from './services/http-interceptor.service';
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
-		AppMaterialModule
+		AppMaterialModule,
+		HammerModule
 	],
 	providers: [
 		RandomDogService,
-		{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: HttpInterceptorService,
+			multi: true
+		}
 	],
 	bootstrap: [AppComponent]
 })
