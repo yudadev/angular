@@ -7,6 +7,10 @@ const routes: Routes = [
 	{
 		path: 'random-dog',
 		component: RandomDogComponent
+	},
+	{
+		path: '**',
+		redirectTo: '/'
 	}
 ];
 
