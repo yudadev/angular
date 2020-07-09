@@ -159,11 +159,11 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	}
 
 	onSwipeLeft(event) {
-		this.showPreviousDog();
+		this.showNextDog();
 	}
 
 	onSwipeRight(event) {
-		this.showNextDog();
+		this.showPreviousDog();
 	}
 
 	showPreviousDog() {
