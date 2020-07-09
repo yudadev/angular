@@ -16,13 +16,16 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	private randomDogJsonSubscription: Subscription;
 	// private randomDogMediaSubscription: Subscription;
 
-	protected randomDog: RandomDog = new RandomDog();
-	protected randomDogMediaBlob;
-	protected percentDone = 0;
-	protected isError = false;
-	protected isVideo = false;
-	protected isLoadingJson: BehaviorSubject<boolean> = new BehaviorSubject(false);
-	protected isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	public currentRandomDog: RandomDog = new RandomDog();
+	public randomDogMediaBlob;
+	public percentDone = 0;
+	public isError = false;
+	public isVideo = false;
+	public isLoadingJson: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	public isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+	public randomDogList: RandomDog[] = [];
+	public maxRandomDogListLength = 3;
 
 	@ViewChild('videoPlayer') videoPlayer: ElementRef;
 
@@ -71,7 +74,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 						// Does not work due to CORS
 						// Purpose: Show accurate loading progress
-						// vm.randomDogMediaSubscription = vm.randomDogService.getRandomDogMedia( vm.randomDog.getUrl() )
+						// vm.randomDogMediaSubscription = vm.randomDogService.getRandomDogMedia( vm.currentRandomDog.getUrl() )
 						// 	.subscribe(
 						// 		result => {
 						// 			if (result.type === HttpEventType.DownloadProgress) {
@@ -95,15 +98,33 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 			);
 	}
 
-	// Fills in RandomDog object
+	// Process data retrieved from JSON subscription
 	loadRandomDog = (randomDog: any) => {
+		const newRandomDog: RandomDog = new RandomDog();
+		newRandomDog.setFileSizeBytes(randomDog.fileSizeBytes);
+		newRandomDog.setUrl(randomDog.url);
+		this.randomDogList.push(newRandomDog);
+
+		// Remove the first item from the list when the list exceeds max length
+		if (this.randomDogList.length > this.maxRandomDogListLength) {
+			this.randomDogList.shift();
+		}
+
+		console.log(this.randomDogList);
+
+		this.currentRandomDog.setFileSizeBytes(randomDog.fileSizeBytes);
+		this.currentRandomDog.setUrl(randomDog.url);
+
+		this.showRandomDog();
+	}
+
+	showRandomDog() {
 		this.isError = false;
-		this.randomDog.setFileSizeBytes(randomDog.fileSizeBytes);
-		this.randomDog.setUrl(randomDog.url);
 
-		console.log(this.randomDog);
+		console.log(this.currentRandomDog);
 
-		this.isVideo = this.randomDog.getUrl().indexOf('.mp4') > -1;
+		this.isVideo = this.currentRandomDog.getUrl().indexOf('.mp4') > -1 ||
+			this.currentRandomDog.getUrl().indexOf('.webm') > -1;
 
 		if (this.isVideo) {
 			// console.log(this.videoPlayer);
@@ -111,6 +132,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 			// console.log(video);
 			this.isLoadingMedia.next(false);
 		}
+
 	}
 
 	// Fires when media is fully loaded

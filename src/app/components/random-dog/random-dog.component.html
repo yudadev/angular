@@ -12,7 +12,7 @@
 		<div [class]="{'hidden' : (isLoadingMedia | async) || isError }">
 			<div>
 				<img [class]="{'hidden' : isVideo }"
-					 [src]="randomDog.getUrl()"
+					 [src]="currentRandomDog.getUrl()"
 					 (error)="!isVideo && onMediaError($event, 'media')"
 					 (load)="onMediaLoad($event)">
 				<video #videoPlayer
@@ -21,7 +21,7 @@
 					   loop
 					   muted
 					   [class]="{'hidden' : !isVideo }"
-					   [src]="randomDog.getUrl()"
+					   [src]="currentRandomDog.getUrl()"
 					   (error)="isVideo && onMediaError($event, 'video')"
 					   (load)="onMediaLoad($event)"></video>
 			</div>
@@ -30,7 +30,7 @@
 
 	<div class="details">
 		<div>
-			File size: {{randomDog.getFileSizeBytes() | number}} bytes
+			File size: {{currentRandomDog.getFileSizeBytes() | number}} bytes
 		</div>
 
 		<button mat-raised-button
