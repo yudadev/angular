@@ -31,12 +31,33 @@
 	<div class="details">
 		<div>
 			File size: {{currentRandomDog.getFileSizeBytes() | number}} bytes
+			<br>
+			Current position: {{currentPosition + 1}}/{{randomDogList.length}} (Max: {{maxRandomDogListLength}})
 		</div>
 
-		<button mat-raised-button
-				color="primary"
-				(click)="onRandomDogBtnClicked()">
-			Random Dog
-		</button>
+		<div class="navigation">
+			<button mat-raised-button
+					color="accent"
+					(click)="showPreviousDog()"
+					[disabled]="currentPosition < 1">
+				<mat-icon>navigate_before</mat-icon>
+				Previous Dog
+				🐶
+			</button>
+
+			<button mat-raised-button
+					color="primary"
+					(click)="showNextDog()">
+				🐶
+				Next Dog
+				<mat-icon>navigate_next</mat-icon>
+			</button>
+		</div>
+
+		<!--<button mat-raised-button-->
+				<!--color="primary"-->
+				<!--(click)="onRandomDogBtnClicked()">-->
+			<!--Random Dog-->
+		<!--</button>-->
 	</div>
 </div>

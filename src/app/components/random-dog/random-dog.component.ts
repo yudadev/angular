@@ -25,7 +25,8 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	public isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
 	public randomDogList: RandomDog[] = [];
-	public maxRandomDogListLength = 3;
+	public currentPosition = 0;
+	public maxRandomDogListLength = 10;
 
 	@ViewChild('videoPlayer') videoPlayer: ElementRef;
 
@@ -112,14 +113,17 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 		console.log(this.randomDogList);
 
-		this.currentRandomDog.setFileSizeBytes(randomDog.fileSizeBytes);
-		this.currentRandomDog.setUrl(randomDog.url);
+		// this.currentRandomDog.setFileSizeBytes(randomDog.fileSizeBytes);
+		// this.currentRandomDog.setUrl(randomDog.url);
 
 		this.showRandomDog();
 	}
 
 	showRandomDog() {
 		this.isError = false;
+
+		this.currentRandomDog.setFileSizeBytes(this.randomDogList[this.currentPosition].getFileSizeBytes());
+		this.currentRandomDog.setUrl(this.randomDogList[this.currentPosition].getUrl());
 
 		console.log(this.currentRandomDog);
 
@@ -155,11 +159,34 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	}
 
 	onSwipeLeft(event) {
-		this.getRandomDogFromService();
+		this.showPreviousDog();
 	}
 
 	onSwipeRight(event) {
-		this.getRandomDogFromService();
+		this.showNextDog();
+	}
+
+	showPreviousDog() {
+		if (this.currentPosition > 0) {
+			this.currentPosition--;
+
+			this.showRandomDog();
+		}
+	}
+
+	showNextDog() {
+		if (this.currentPosition < this.maxRandomDogListLength - 1) {
+			this.currentPosition++;
+
+			if (this.randomDogList[this.currentPosition] === undefined) {
+				this.getRandomDogFromService();
+			} else {
+				this.showRandomDog();
+			}
+
+		} else {
+			this.getRandomDogFromService();
+		}
 	}
 
 }

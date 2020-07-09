@@ -23,6 +23,27 @@
 
 		.details {
 			height: 20%;
+
+			.navigation {
+				display: flex;
+				justify-content: space-evenly;
+				width: 100%;
+
+				button {
+					width: 100%;
+
+					// vertically align content
+					.mat-button-wrapper {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+
+					+ button {
+						margin-left: 2%;
+					}
+				}
+			}
 		}
 	}
 }
