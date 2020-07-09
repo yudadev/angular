@@ -16,13 +16,13 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	private randomDogJsonSubscription: Subscription;
 	// private randomDogMediaSubscription: Subscription;
 
-	public randomDog: RandomDog = new RandomDog();
-	public randomDogMediaBlob;
-	public percentDone = 0;
-	public isError = false;
-	public isVideo = false;
-	public isLoadingJson: BehaviorSubject<boolean> = new BehaviorSubject(false);
-	public isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	protected randomDog: RandomDog = new RandomDog();
+	protected randomDogMediaBlob;
+	protected percentDone = 0;
+	protected isError = false;
+	protected isVideo = false;
+	protected isLoadingJson: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	protected isLoadingMedia: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
 	@ViewChild('videoPlayer') videoPlayer: ElementRef;
 
