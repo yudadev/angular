@@ -6,12 +6,16 @@ import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
 	{
-		path: 'random-dog',
-		component: RandomDogComponent
-	},
-	{
 		path: '',
 		component: HomeComponent
+	},
+	{
+		path: 'home',
+		component: HomeComponent
+	},
+	{
+		path: 'random-dog',
+		component: RandomDogComponent
 	},
 	{
 		path: '**',
@@ -20,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [RouterModule.forRoot(routes, { useHash: true })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {
