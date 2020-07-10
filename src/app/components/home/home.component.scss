@@ -1,0 +1,23 @@
+$up-arrow-animation-duration: 1.5s;
+
+.up {
+	animation: upArrowAnimation $up-arrow-animation-duration infinite;
+	position: relative;
+
+	+ .up {
+		animation-delay: $up-arrow-animation-duration / 5;
+
+		+ .up {
+			animation-delay: $up-arrow-animation-duration * 2 / 5;
+		}
+	}
+}
+
+@keyframes upArrowAnimation {
+	from {
+		top: 0;
+	}
+	to {
+		top: 3px;
+	}
+}

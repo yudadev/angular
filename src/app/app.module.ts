@@ -9,11 +9,13 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RandomDogComponent} from './components/random-dog/random-dog.component';
 import {AppMaterialModule} from './app-material.module';
 import {HttpInterceptorService} from './services/http-interceptor.service';
+import {HomeComponent} from './components/home/home.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		RandomDogComponent
+		RandomDogComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
