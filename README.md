@@ -2,7 +2,7 @@
 
 This is a personal portfolio project.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.  Upgraded to 10.0.0.
 
 ## Development server
 
@@ -11,6 +11,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+`ng g c new-component --module app` to target the main module.
 
 ## Build
 
