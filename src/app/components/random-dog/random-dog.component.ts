@@ -146,6 +146,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		// 	console.log(video);
 		// }
 		this.isLoadingMedia.next(false);
+		// console.log('onMediaLoad, isVideo: ' + this.isVideo);
 		// console.log(event);
 	}
 
@@ -154,8 +155,9 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		this.isError = true;
 
 		this.isLoadingMedia.next(false);
-		console.log('onMediaError, isVideo: ' + this.isVideo);
-		console.log(event);
+		// console.log('onMediaError, isVideo: ' + this.isVideo);
+		// console.log(event);
+		// console.log(this.currentRandomDog);
 	}
 
 	onSwipeLeft(event) {
