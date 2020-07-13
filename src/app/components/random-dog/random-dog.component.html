@@ -22,7 +22,6 @@
 					   muted
 					   [class]="{'hidden' : !isVideo }"
 					   [src]="currentRandomDog.getUrl()"
-					   (click)="playOrPauseVideo()"
 					   (error)="isVideo && onMediaError($event, 'video')"
 					   (load)="onMediaLoad($event)"></video>
 			</div>

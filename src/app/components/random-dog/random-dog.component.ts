@@ -191,13 +191,4 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		}
 	}
 
-	playOrPauseVideo = (event) => {
-		console.log(this.videoPlayer.nativeElement);
-		if (this.videoPlayer.nativeElement.paused) {
-			this.videoPlayer.nativeElement.play();
-		} else {
-			this.videoPlayer.nativeElement.pause();
-		}
-	}
-
 }
