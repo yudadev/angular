@@ -1,7 +1,7 @@
-<div class="random-dog">
-	<div class="image-container"
-		 (swipeleft)="onSwipeLeft($event)"
-		 (swiperight)="onSwipeRight($event)">
+<div class="random-dog"
+	 (swipeleft)="onSwipeLeft($event)"
+	 (swiperight)="onSwipeRight($event)">
+	<div class="image-container">
 		<div [class]="{'hidden' : !(isLoadingMedia | async) || isError }">
 			Loading next dog...
 			<mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -22,6 +22,7 @@
 					   muted
 					   [class]="{'hidden' : !isVideo }"
 					   [src]="currentRandomDog.getUrl()"
+					   (click)="playOrPauseVideo()"
 					   (error)="isVideo && onMediaError($event, 'video')"
 					   (load)="onMediaLoad($event)"></video>
 			</div>
