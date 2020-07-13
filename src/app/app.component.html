@@ -7,13 +7,15 @@
 <mat-menu #menu="matMenu">
 	<button mat-menu-item
 			routerLink="/"
-			routerLinkActive="active">
+			[routerLinkActive]="['active']"
+			[disabled]="router.url === '/home' || router.url === '/'">
 		<mat-icon>home</mat-icon>
 		Home
 	</button>
 	<button mat-menu-item
 			routerLink="/random-dog"
-			routerLinkActive="active">
+			[routerLinkActive]="['active']"
+			[disabled]="router.url === '/random-dog'">
 		<mat-icon>pets</mat-icon>
 		Random Dog
 	</button>
