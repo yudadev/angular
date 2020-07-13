@@ -37,11 +37,11 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 	}
 
-	ngOnInit = () => {
+	ngOnInit() {
 		this.getRandomDogFromService();
 	}
 
-	ngOnDestroy = () => {
+	ngOnDestroy() {
 		this.randomDogJsonSubscription.unsubscribe();
 		// this.randomDogMediaSubscription.unsubscribe();
 	}
@@ -188,6 +188,15 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 		} else {
 			this.getRandomDogFromService();
+		}
+	}
+
+	playOrPauseVideo = (event) => {
+		console.log(this.videoPlayer.nativeElement);
+		if (this.videoPlayer.nativeElement.paused) {
+			this.videoPlayer.nativeElement.play();
+		} else {
+			this.videoPlayer.nativeElement.pause();
 		}
 	}
 
