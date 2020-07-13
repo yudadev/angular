@@ -37,11 +37,11 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 
 	}
 
-	ngOnInit() {
+	ngOnInit = () => {
 		this.getRandomDogFromService();
 	}
 
-	ngOnDestroy() {
+	ngOnDestroy = () => {
 		this.randomDogJsonSubscription.unsubscribe();
 		// this.randomDogMediaSubscription.unsubscribe();
 	}
@@ -119,7 +119,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		this.showRandomDog();
 	}
 
-	showRandomDog() {
+	showRandomDog = () => {
 		this.isError = false;
 
 		this.currentRandomDog.setFileSizeBytes(this.randomDogList[this.currentPosition].getFileSizeBytes());
@@ -140,7 +140,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	}
 
 	// Fires when media is fully loaded
-	onMediaLoad(event) {
+	onMediaLoad = (event) => {
 		// if (this.isVideo) {
 		// 	const video: HTMLVideoElement = this.videoPlayer.nativeElement;
 		// 	console.log(video);
@@ -151,7 +151,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 	}
 
 	// Fires if media can't be loaded
-	onMediaError(event, mediaType: string) {
+	onMediaError = (event, mediaType: string) => {
 		this.isError = true;
 
 		this.isLoadingMedia.next(false);
@@ -160,15 +160,15 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		// console.log(this.currentRandomDog);
 	}
 
-	onSwipeLeft(event) {
+	onSwipeLeft = (event) => {
 		this.showNextDog();
 	}
 
-	onSwipeRight(event) {
+	onSwipeRight = (event) => {
 		this.showPreviousDog();
 	}
 
-	showPreviousDog() {
+	showPreviousDog = () => {
 		if (this.currentPosition > 0) {
 			this.currentPosition--;
 
@@ -176,7 +176,7 @@ export class RandomDogComponent implements OnDestroy, OnInit {
 		}
 	}
 
-	showNextDog() {
+	showNextDog = () => {
 		if (this.currentPosition < this.maxRandomDogListLength - 1) {
 			this.currentPosition++;
 
