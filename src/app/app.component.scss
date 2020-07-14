@@ -1,0 +1,11 @@
+mat-menu {
+	display: block;
+}
+
+.mat-menu-item {
+	&.active {
+		.mat-icon {
+			color: rgba(0, 0, 0, 0.18);
+		}
+	}
+}

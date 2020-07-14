@@ -1,0 +1,49 @@
+::ng-deep {
+	.random-dog {
+
+		height: calc(100vh - 60px);
+		text-align: center;
+
+		.details,
+		.image-container {
+			display: grid;
+			place-items: center;
+		}
+
+		.image-container {
+			height: 80%;
+
+			img,
+			video {
+				display: inline-block;
+				max-height: 70vh;
+				max-width: 100%;
+			}
+		}
+
+		.details {
+			height: 20%;
+
+			.navigation {
+				display: flex;
+				justify-content: space-evenly;
+				width: 100%;
+
+				button {
+					width: 100%;
+
+					// vertically align content
+					.mat-button-wrapper {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+
+					+ button {
+						margin-left: 2%;
+					}
+				}
+			}
+		}
+	}
+}

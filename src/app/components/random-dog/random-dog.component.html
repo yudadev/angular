@@ -1,0 +1,67 @@
+<div class="random-dog"
+	 (swipeleft)="onSwipeLeft($event)"
+	 (swiperight)="onSwipeRight($event)">
+	<div class="image-container">
+		<div [class]="{'hidden' : !(isLoadingMedia | async) || isError }">
+			Loading next dog...
+			<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+		</div>
+		<div [class]="{'hidden' : !isError }">
+			Dog-gone? Press [Next Dog] below.
+		</div>
+		<div [class]="{'hidden' : (isLoadingMedia | async) || isError }">
+			<div>
+				<img [class]="{'hidden' : isVideo }"
+					 [src]="currentRandomDog.getUrl()"
+					 (error)="!isVideo && onMediaError($event, 'media')"
+					 (load)="onMediaLoad($event)">
+				<video #videoPlayer
+					   autoplay
+					   controls
+					   loop
+					   muted
+					   [class]="{'hidden' : !isVideo }"
+					   [src]="currentRandomDog.getUrl()"
+					   (error)="isVideo && onMediaError($event, 'video')"
+					   (load)="onMediaLoad($event)"></video>
+			</div>
+		</div>
+	</div>
+
+	<div class="details">
+		<!--<div>
+			File size: {{currentRandomDog.getFileSizeBytes() | number}} bytes
+			<br>
+			Current position: {{currentPosition + 1}}/{{maxRandomDogListLength}}
+		</div>-->
+
+		<div class="navigation">
+			<button mat-raised-button
+					color="accent"
+					(click)="showPreviousDog()"
+					[disabled]="currentPosition < 1">
+				<mat-icon>navigate_before</mat-icon>
+				Previous Dog
+				🐶
+			</button>
+
+			<button mat-raised-button
+					color="primary"
+					(click)="showNextDog()">
+				🐶
+				Next Dog
+				<mat-icon>navigate_next</mat-icon>
+			</button>
+		</div>
+
+		<div class="extra">
+			Hint: <mat-icon>touch_app</mat-icon> Swipe left or right to navigate images.
+		</div>
+
+		<!--<button mat-raised-button-->
+				<!--color="primary"-->
+				<!--(click)="onRandomDogBtnClicked()">-->
+			<!--Random Dog-->
+		<!--</button>-->
+	</div>
+</div>
